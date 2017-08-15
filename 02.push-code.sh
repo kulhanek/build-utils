@@ -4,10 +4,16 @@
 function push_code() {
     echo ""
     echo "# $2 -> $1"
+    SRV=`echo $2 | cut -d '@' -f 2`
+    if [ "$SRV" == "ncbr" ]; then
+       SRV="ncbr"
+    else
+       SRV="github"
+    fi
     echo "# -------------------------------------------" 
     OLDPWD=$PWD
     cd $1 || exit 1
-    git push github master || exit 1
+    git push $SRV master || exit 1
     cd $OLDPWD 
 }
 
