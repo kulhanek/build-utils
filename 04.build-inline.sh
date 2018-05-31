@@ -21,6 +21,13 @@ if type module &> /dev/null; then
     module add cmake
 fi
 
+# ------------------------------------------------------------------------------
+# run pre-installation hook if available
+if [ -f ./preinstall-hook ]; then
+    bash ./preinstall-hook || exit 1
+fi
+
+# ------------------------------------------------------------------------------
 # determine number of available CPUs if not specified
 if [ -z "$N" ]; then
     N=1
