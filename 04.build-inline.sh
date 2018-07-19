@@ -16,6 +16,14 @@ while [ $# -ne 0 ]; do
     shift
 done
 
+# ------------------------------------------------------------------------------
+# add extra cmake options
+if [ -f cmake.options ]; then
+    while read ITEM; do
+        MODE="$MODE $ITEM"
+    done < cmake.options
+fi
+
 # add cmake from modules if they exist
 if type module &> /dev/null; then
     module add cmake
@@ -49,7 +57,7 @@ function build_code() {
     mkdir -p $1 || exit 1
     cd $1 || exit 1
     if [ -f CMakeLists.txt ]; then
-        cmake $MODE . || exit 1
+        cmake --no-warn-unused-cli $MODE . || exit 1
         make -j$N || exit 1
     fi
     cd $OLDPWD
