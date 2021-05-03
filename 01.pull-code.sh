@@ -23,6 +23,9 @@ function dowload_code() {
         git remote add $URL || exit 1
     fi
     git pull $SRV master || exit 1
+    if [ -x UpdateGitVersion ]; then
+        ./UpdateGitVersion activate
+    fi
     cd $OLDPWD
 }
 
