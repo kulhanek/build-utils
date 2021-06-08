@@ -13,7 +13,10 @@ cat repositories | grep -v '^#' | while read A B C; do
     echo "# $B"
     echo "# -------------------------------------------"  
     if [ -f $A/CMakeClean.sh ]; then
-        ./$A/CMakeClean.sh $MODE 
+        (
+            cd $A
+            ./CMakeClean.sh $MODE 
+        )
     else
         echo "> Nothing to clean ..."
     fi
