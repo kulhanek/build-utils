@@ -24,6 +24,13 @@ if [ -f cmake.options ]; then
     done < cmake.options
 fi
 
+# add cmake from modules if they exist
+if ! type cmake &> /dev/null; then
+    if type module &> /dev/null; then
+        module add cmake
+    fi
+fi
+
 # ------------------------------------------------------------------------------
 # run pre-installation hook if available
 if [ -f ./preinstall-hook ]; then
