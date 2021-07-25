@@ -25,8 +25,10 @@ if [ -f cmake.options ]; then
 fi
 
 # add cmake from modules if they exist
-if type module &> /dev/null; then
-    module add cmake
+if ! type cmake &> /dev/null; then
+    if type module &> /dev/null; then
+        module add cmake
+    fi
 fi
 
 # ------------------------------------------------------------------------------
