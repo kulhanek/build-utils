@@ -22,7 +22,11 @@ function dowload_code() {
         echo "git remote add $URL"
         git remote add $URL || exit 1
     fi
-    git pull $SRV master || exit 1
+    BR=master
+    if [ -n "$3" ]; then
+        BR=$3
+    fi
+    git pull $SRV $BR || exit 1
     if [ -x UpdateGitVersion ]; then
         ./UpdateGitVersion activate
     fi
@@ -31,8 +35,8 @@ function dowload_code() {
 
 # ------------------------------------------------------------------------------
 
-cat repositories | grep -v '^#' | while read A B; do
-   dowload_code $A $B || exit 1
+cat repositories | grep -v '^#' | while read A B C; do
+   dowload_code $A $B $C || exit 1
 done
 
 echo ""
